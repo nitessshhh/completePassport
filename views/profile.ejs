@@ -1,0 +1,70 @@
+<% include ./partials/header.ejs %>
+<link rel="stylesheet" href="/stylesheets/style.css">
+ 
+ <form id="hidden" action="/uploads" method="post" enctype="multipart/form-data">
+  <input id="fileinp" type="file" name="dp" >
+  <input id="submit" type="submit">
+ </form>
+    <div class="container mt-5">
+          <img id="image" style="height: 8rem;width: 8rem; object-fit: cover;border-radius: 50%; object-position: top;" src="/images/uploads/<%=user.image%>" class="card-img-top" alt="...">
+   
+                 <div class="card-body">       
+                      <h5 class="card-title"><%= user.username %></h5>
+          <p class="card-text"><%= user.email %></p>
+          <small >Liked by <span><%= user.likes.length %></span> people</small> <br>
+          <a href="/likes/<%=user._id %>" class="btn btn-primary mt-3">like profile</a>
+        </div>
+    
+  
+    </div>
+<div class="container mt-5">
+  <h5>Create post</h5>
+  <form action="/post" method="post">
+    <div class="col-6">
+      <div class="mt-3">
+        <label >What's in your mind?</label>
+        <textarea class="form-control" name="postdets" id="exampleFormControlTextarea1"  rows="4" style="resize: none;"></textarea>
+      </div>
+      <div class="d-grid mt-2 ">
+        <button class="btn btn-primary" type="submit">Post</button>
+      </div>
+    </div>
+  </form>
+
+
+
+
+  </div>
+
+  <div class="container mt-5  p-4 "  >
+    <% user.post.reverse().forEach(function(post){%>
+      <div class="card col-6 mt-2 " >
+        <div class="d-flex gap-4 mt-2 p-2">
+          <img style="height: 2.5vw; width: 2.5vw;border-radius: 50%; object-fit: cover; object-position: top;" src="/images/uploads/<%=post.user.image%>" class="card-img-top" alt="...">
+          <h5 class="card-title"><%= post.user.username %></h5>
+         
+        </div>
+        <div class="card-body">
+         
+          <p class="card-text"><%= post.postdets %></p>
+        <a href="/like/<%=post._id %> " class="btn btn-primary mt-3">Like <%= post.like.length %></a>
+        <p class="date"><%= post.Date %></p>
+          </div>
+      </div>
+     
+  <%})%>
+</div>
+
+
+
+
+
+    <script>
+      document.querySelector("#image").addEventListener("click",function(){
+        document.querySelector("#fileinp").click();
+      });
+      document.querySelector("#fileinp").addEventListener("change",function(){
+        document.querySelector("#submit").click();
+      })
+    </script>
+    <% include ./partials/footer.ejs %>
